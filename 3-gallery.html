@@ -1,0 +1,86 @@
+<!--
+Make this gallery application work. The previous and next buttons should cycle through the 6 photos in the gallery.
+
+## Step 2
+
+After making the previous and next buttons work, also list all the images in the gallery as thumbnails (just use height/height to make them smaller), and make them clickable so that when clicked, the clicked photo becomes the main photo.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Babel Quickstart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-presets="react">
+    const images = [
+      'images/comfy.jpg',
+      'images/farted.jpg',
+      'images/hate.jpg',
+      'images/lolcat_airplane.jpg',
+      'images/mocked.jpg',
+      'images/monorail.jpg',
+    ];
+
+    class Gallery extends React.Component {
+        constructor() {
+            super();
+            this.state = {
+                img_index: 0
+            }
+        }
+
+        nextImage() {
+            if (this.state.img_index === images.length - 1) {
+                this.setState({img_index: 0})
+            } else {
+                this.state.img_index += 1;
+                this.setState({img_index: this.state.img_index})
+            }
+        }
+
+        prevImage() {
+            if (this.state.img_index === 0) {
+                this.state.img_index = images.length - 1;
+            } else {
+                this.state.img_index -= 1;
+            }
+            this.setState({img_index: this.state.img_index})
+        }
+
+        changeImage(index) {
+            this.setState({
+                img_index: index
+            })
+        }
+
+        render() {
+            let currentImage = images[this.state.img_index];
+            return (
+                <div>
+                    <button onClick={() => this.prevImage()}>Previous</button>
+                    <button onClick={() => this.nextImage()}>Next</button>
+                    <br/>
+                    <img src={currentImage}/>
+                    <div>
+                        {images.map((image, index) =>
+                            <img onClick={() => this.changeImage(index)} src={image} height="68"/>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(
+      <Gallery images={images}/>,
+      document.getElementById('root')
+    );
+
+    </script>
+  </body>
+</html>
