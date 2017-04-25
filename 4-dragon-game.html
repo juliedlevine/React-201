@@ -32,41 +32,41 @@ Hints at the bottom of this file.
             super();
             this.state = {
                 dragon_health: 20,
-                hero_health: 10,
-                message: '',
-                isDisabled: false
-            }
-        }
-
-        checkWinner() {
-            if (this.state.dragon_health <= 0) {
-                this.setState({message: 'Dragon has died, player wins.'})
-                this.setState({isDisabled: true})
-            } else if (this.state.hero_health <= 0) {
-                this.setState({message: 'Hero has died, Dragon wins.'})
-                this.setState({isDisabled: true})
+                hero_health: 10
             }
         }
 
         fight() {
             var damage = Math.random();
             if (damage >= 0.5) {
-                this.state.dragon_health -= 5;
-                this.setState({dragon_health: this.state.dragon_health})
+                this.setState({dragon_health: this.state.dragon_health - 5})
             } else {
-                this.state.hero_health -= 5;
-                this.setState({hero_health: this.state.hero_health})
+                this.setState({hero_health: this.state.hero_health - 5})
             }
-            this.checkWinner();
         }
 
         flight() {
-            this.state.hero_health += 2;
-            this.setState({hero_health: this.state.hero_health})
+            this.setState({hero_health: this.state.hero_health + 2})
+        }
+
+        playAgain() {
+            this.setState({
+                dragon_health : 20,
+                hero_health : 10
+            });
         }
 
         render() {
             let message = '';
+            let gameOver = false;
+            if (this.state.dragon_health <= 0) {
+                message = 'Dragon has died, player wins.';
+                gameOver = true;
+            } else if (this.state.hero_health <= 0) {
+                message = 'Hero has died, Dragon wins.';
+                gameOver = true;
+            }
+
             return (
                 <div>
                     <img src="http://img10.deviantart.net/e984/i/2015/287/c/5/red_dragon_by_sandara-d6hpycs.jpg" width="400"/>
@@ -74,10 +74,11 @@ Hints at the bottom of this file.
                     <label>Dragon: {this.state.dragon_health} </label>&nbsp;
                     <label>Hero: {this.state.hero_health} </label>
                     <br/>
-                    {this.state.message}
+                    {message}
                     <br/>
-                    <button disabled = {this.state.isDisabled} onClick={() => this.fight()}>Fight </button>
-                    <button disabled = {this.state.isDisabled} onClick={() => this.flight()}> Flight </button>
+                    <button disabled = {gameOver} onClick={() => this.fight()}>Fight </button>
+                    <button disabled = {gameOver} onClick={() => this.flight()}> Flight </button>
+                    {gameOver ? <button onClick={() => this.playAgain()}>Play Again?</button> : <br/>}
                 </div>
             );
         }

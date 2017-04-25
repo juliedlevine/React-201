@@ -30,40 +30,40 @@ After making the previous and next buttons work, also list all the images in the
         constructor() {
             super();
             this.state = {
-                img_index: 0
+                currentIndex: 1
             }
         }
 
-        nextImage() {
-            if (this.state.img_index === images.length - 1) {
-                this.setState({img_index: 0})
+        next() {
+            if (this.state.currentIndex === images.length - 1) {
+                this.setState({currentIndex: 0})
             } else {
-                this.state.img_index += 1;
-                this.setState({img_index: this.state.img_index})
+                this.state.currentIndex += 1;
+                this.setState({currentIndex: this.state.currentIndex})
             }
         }
 
-        prevImage() {
-            if (this.state.img_index === 0) {
-                this.state.img_index = images.length - 1;
+        previous() {
+            if (this.state.currentIndex === 0) {
+                this.state.currentIndex = images.length - 1;
             } else {
-                this.state.img_index -= 1;
+                this.state.currentIndex -= 1;
             }
-            this.setState({img_index: this.state.img_index})
+            this.setState({currentIndex: this.state.currentIndex})
         }
 
         changeImage(index) {
             this.setState({
-                img_index: index
+                currentIndex: index
             })
         }
 
         render() {
-            let currentImage = images[this.state.img_index];
+            let currentImage = images[this.state.currentIndex];
             return (
                 <div>
-                    <button onClick={() => this.prevImage()}>Previous</button>
-                    <button onClick={() => this.nextImage()}>Next</button>
+                    <button onClick={() => this.previous()}>Previous</button>
+                    <button onClick={() => this.next()}>Next</button>
                     <br/>
                     <img src={currentImage}/>
                     <div>
