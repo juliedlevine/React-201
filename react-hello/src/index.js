@@ -11,7 +11,10 @@ class TicTacToe extends React.Component {
         super();
         this.state = {
             currentPlayer: 'X',
-            board: ['', '', '', '', '', '', '', '', '']
+            board: ['', '', '', '', '', '', '', '', ''],
+            xWins: 0,
+            oWins: 0,
+            draw: 0
         }
     }
 
@@ -63,7 +66,11 @@ class TicTacToe extends React.Component {
                 <div className={classnames('board', {'disabled' : gameOver===true})}>
                     {this.state.board.map((square, index) =>
                         <div key={index}
-                            className={classnames('square', {'disabled' : square!= ''})}
+                            className={classnames('square', {
+                                'disabled' : square!= '',
+                                'square_x' : this.state.currentPlayer === 'X',
+                                'square_o' : this.state.currentPlayer === 'O'
+                            })}
                             onClick={()=> this.play(index)}>
                             {this.state.board[index]}
                         </div>

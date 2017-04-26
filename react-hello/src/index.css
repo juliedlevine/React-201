@@ -30,6 +30,21 @@ body {
     color: white;
 }
 
+.square_x:hover:after {
+    content: 'X';
+}
+/* Override the hover class once a square has been clicked */
+.square_x.disabled:hover:after {
+    content: '';
+}
+.square_o:hover:after {
+    content: 'O'
+}
+/* Override the hover class once a square has been clicked */
+.square_o.disabled:hover:after {
+    content: '';
+}
+
 .board {
     width: 450px;
     margin: 0 auto;
